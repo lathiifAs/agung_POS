@@ -1,2 +1,3 @@
- # Aplikasi Inventori barang dan POS sederhana
+#Inventori barang sederhana
+Project From : Agung
 Created by : Lathiif Aji Santhosho
