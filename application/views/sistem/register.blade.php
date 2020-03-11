@@ -144,8 +144,8 @@
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 							Copyright &copy;<script>
 								document.write(new Date().getFullYear());
-							</script> All rights reserved | <a href="https://masruri-sabdagurugpmc.com"
-								target="_blank">masruri-sabdagurugpmc.com</a>
+							</script> All rights reserved | <a href="https://artdev.com"
+								target="_blank">artdev.com</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</P>
 					</div>

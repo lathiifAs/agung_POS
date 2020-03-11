@@ -5,25 +5,25 @@
     <title>Login</title>
     <link rel="icon" href="img/favicon.png') }}">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/bootstrap.min.css')); ?>">
     <!-- animate CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/animate.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/animate.css')); ?>">
     <!-- owl carousel CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/owl.carousel.min.css')); ?>">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/all.css') }}">
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/nice-select.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/all.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/nice-select.css')); ?>">
     <!-- flaticon CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/flaticon.css') }}">
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/themify-icons.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/flaticon.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/themify-icons.css')); ?>">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/magnific-popup.css')); ?>">
     <!-- swiper CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/slick.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/slick.css')); ?>">
     <!-- swiper CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/price_rangs.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/price_rangs.css')); ?>">
     <!-- style CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/client_template/css/style.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/client_template/css/style.css')); ?>">
 </head>
 
 <body class="bg-white">
@@ -71,16 +71,16 @@
 
                 <!-- tampilan website -->
                 <div class="col-lg-6 col-md-6  d-none d-lg-block">
-                    <img src="{{ base_url('assets/images/background/wp_store.jpg') }}" alt="">
+                    <img src="<?php echo e(base_url('assets/images/background/wp_store.jpg')); ?>" alt="">
                 </div>
 
                 <div class="col-lg-6 col-md-6">
                     <div class="login_part_form">
                         <div class="login_part_form_iner">
-                            {{-- notif --}}
-                            @include('template/notif')
+                            
+                            <?php echo $__env->make('template/notif', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                             <h2 style="margin-left:3%; margin-bottom:10%;" class="text-primary" >Aplikasi Inventaris Barang dan Kasir.</h2>
-                            <form action="{{ site_url('sistem/login/login_process') }}" method="post">
+                            <form action="<?php echo e(site_url('sistem/login/login_process')); ?>" method="post">
                                 <div class="col-md-12 form-group p_star">
                                     <input type="text" class="form-control" type="username" name="username"
                                         placeholder="Username">
@@ -95,7 +95,7 @@
                                     </button>
                                     <!-- tampilan mobile -->
                                     <div class="col-lg-6 col-md-6 d-lg-none d-block">
-                                        <a href="{{ site_url('sistem/register') }}"> <button
+                                        <a href="<?php echo e(site_url('sistem/register')); ?>"> <button
                                                 style="background-color:white;color:grey" type="button" value="beranda"
                                                 class="btn_3">
                                                 Buat Akun
@@ -133,33 +133,33 @@
 
     <!-- jquery plugins here-->
     <!-- jquery -->
-    <script src="{{ base_url('assets/client_template/js/jquery-1.12.1.min.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/jquery-1.12.1.min.js')); ?>"></script>
     <!-- popper js -->
-    <script src="{{ base_url('assets/client_template/js/popper.min.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/popper.min.js')); ?>"></script>
     <!-- bootstrap js -->
-    <script src="{{ base_url('assets/client_template/js/bootstrap.min.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/bootstrap.min.js')); ?>"></script>
     <!-- easing js -->
-    <script src="{{ base_url('assets/client_template/js/jquery.magnific-popup.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/jquery.magnific-popup.js')); ?>"></script>
     <!-- swiper js -->
-    <script src="{{ base_url('assets/client_template/js/swiper.min.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/swiper.min.js')); ?>"></script>
     <!-- swiper js -->
 
     <!-- particles js -->
-    <script src="{{ base_url('assets/client_template/js/owl.carousel.min.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/jquery.nice-select.min.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/owl.carousel.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/jquery.nice-select.min.js')); ?>"></script>
     <!-- slick js -->
-    <script src="{{ base_url('assets/client_template/js/slick.min.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/jquery.counterup.min.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/waypoints.min.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/contact.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/jquery.ajaxchimp.min.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/jquery.form.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/jquery.validate.min.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/mail-script.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/stellar.js') }}"></script>
-    <script src="{{ base_url('assets/client_template/js/price_rangs.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/slick.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/jquery.counterup.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/waypoints.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/contact.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/jquery.ajaxchimp.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/jquery.form.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/jquery.validate.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/mail-script.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/stellar.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/price_rangs.js')); ?>"></script>
     <!-- custom js -->
-    <script src="{{ base_url('assets/client_template/js/custom.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/client_template/js/custom.js')); ?>"></script>
 </body>
 
 </html>

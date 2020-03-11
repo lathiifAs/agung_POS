@@ -30,17 +30,17 @@
                         <a href="index.html">
                             <b class="logo-icon">
                                 <!-- Dark Logo icon -->
-                                <img src="{{ base_url('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo" />
+                                <img src="<?php echo e(base_url('assets/images/logo-icon.png')); ?>" alt="homepage" class="dark-logo" />
                                 <!-- Light Logo icon -->
-                                <img src="{{ base_url('assets/images/logo-icon.png') }}" alt="homepage" class="light-logo" />
+                                <img src="<?php echo e(base_url('assets/images/logo-icon.png')); ?>" alt="homepage" class="light-logo" />
                             </b>
                             <!--End Logo icon -->
                             <!-- Logo text -->
                             <span class="logo-text">
                                 <!-- dark Logo text -->
-                                <img src="{{ base_url('assets/images/logo-text.png') }}" alt="homepage" class="dark-logo" />
+                                <img src="<?php echo e(base_url('assets/images/logo-text.png')); ?>" alt="homepage" class="dark-logo" />
                                 <!-- Light Logo text -->
-                                <img src="{{ base_url('assets/images/logo-light-text.png') }}" class="light-logo" alt="homepage" />
+                                <img src="<?php echo e(base_url('assets/images/logo-light-text.png')); ?>" class="light-logo" alt="homepage" />
                             </span>
                         </a>
                     </div>
@@ -187,7 +187,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ base_url('assets/images/users/profile-pic.jpg') }}" alt="user" class="rounded-circle"
+                                <img src="<?php echo e(base_url('assets/images/users/profile-pic.jpg')); ?>" alt="user" class="rounded-circle"
                                     width="40">
                                 <span class="ml-2 d-none d-lg-inline-block"><span
                                         class="text-dark">Admin</span> <i data-feather="chevron-down"
@@ -197,7 +197,7 @@
                                 <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
                                         class="svg-icon mr-2 ml-1"></i>
                                     My Profile</a>
-                                <a class="dropdown-item" href="{{ site_url('sistem/login/logout') }}" ><i data-feather="power"
+                                <a class="dropdown-item" href="<?php echo e(site_url('sistem/login/logout')); ?>" ><i data-feather="power"
                                         class="svg-icon mr-2 ml-1"></i>
                                     Logout</a>
                             </div>

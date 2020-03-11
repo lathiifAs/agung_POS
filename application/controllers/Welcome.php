@@ -45,9 +45,7 @@ class Welcome extends Artdev_Controller {
 
 	public function index()
 	{
-		if ($this->get_login('role_id') > 2) {
-			redirect($this->get_login('default_page'));
-		}
+		// cek($this->get_login('role_id'));
 		// //data anggota bisnis
 		// $data_pendaftar_bisnis = [];
 		// $get_pendaftar_bisnis = $this->M_dashboard->c_pendaftar_bisnis();

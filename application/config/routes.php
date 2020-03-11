@@ -50,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> Artdev_Controller/my_method
 */
 // $route['default_controller'] = 'welcome';
-$route['default_controller'] = 'client/beranda/index';
+$route['default_controller'] = 'welcome/index';
 // $route['default_controller'] = "beranda";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -79,7 +79,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-	'database' => 'db_riset',
+	'database' => 'db_inventori_barang_pos',
 	//server
 	// 'hostname' => 'artdev.id',
 	// 'username' => 'gpmc_sabdaguru',
