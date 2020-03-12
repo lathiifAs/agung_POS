@@ -51,23 +51,17 @@
                                     class="btn btn-secondary">Reset</button>
                             </div>
                         </form>
-                        <div class="text-right col-lg-12">
-                            <a href="{{ site_url('master/barang/add') }}" type="submit" class="btn btn-primary">Tambah
-                                Data</a>
-                        </div>
                     </div>
-                    <div class="table-responsive">
+                    <div style="margin-top:1%" class="table-responsive">
                         <table class="table">
                             <thead class="bg-primary text-white">
                                 <tr>
                                     <th class="text-align text-center" width="5%">No.</th>
-                                    <th class="text-align text-center" width="10%">Kode Barang</th>
-                                    <th class="text-align text-center" width="15%">Nama</th>
-                                    <th class="text-align text-center" width="10%">Stok</th>
+                                    <th class="text-align text-center" width="15%">Kode Barang</th>
+                                    <th class="text-align text-center" width="20%">Nama</th>
+                                    <th class="text-align text-center" width="10%">jumlah Stok</th>
                                     <th class="text-align text-center" width="10%">Satuan</th>
-                                    <th class="text-align text-center" width="10%">Harga</th>
-                                    <th class="text-align text-center" width="5%">Status</th>
-                                    <th class="text-align text-center" width="20%"></th>
+                                    <th class="text-align text-center" width="10%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,24 +73,13 @@
                                     <td>{{ $rs['barang_nm'] }}</td>
                                     <td class="text-align text-center">{{ $rs['stok'] }}</td>
                                     <td class="text-align text-center">{{ $rs['satuan'] }}</td>
-                                    <td class="text-align text-center">Rp. {{ number_format($rs['harga']) }}</td>
-                                    <td class="text-align text-center">
-                                        @if ($rs['active_st'] == 'no')
-                                        <span class="badge badge-danger">tidak aktif</span>
-                                        @else
-                                        <span class="badge badge-success">aktif</span>
-                                        @endif
-                                    </td>
                                     <td>
-                                        <a href="{{ site_url('master/barang/detail/'.$rs['barang_id']) }}" type="button"
-                                            class="btn btn-info btn-rounded m-b-10 m-l-5" title="Detail"><i
-                                                class="ti-eye"></i> Detail</a>
+                                        <a href="{{ site_url('master/barang/edit/'.$rs['barang_id']) }}"
+                                            class="btn btn-danger btn-rounded m-b-10 m-l-5" title="Edit"><i
+                                                class="ti-mines"></i> -</a>
                                         <a href="{{ site_url('master/barang/edit/'.$rs['barang_id']) }}"
                                             class="btn btn-success btn-rounded m-b-10 m-l-5" title="Edit"><i
-                                                class="ti-pencil"></i> Edit</a>
-                                        <a href="{{ site_url('master/barang/delete/'.$rs['barang_id']) }}"
-                                            class="btn btn-danger btn-rounded m-b-10 m-l-5" title="Delete"><i
-                                                class="ti-trash"></i> Hapus</button>
+                                                class="ti-pluss"></i> +</a>
                                     </td>
                                 </tr>
                                 @endforeach

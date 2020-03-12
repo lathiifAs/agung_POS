@@ -79,7 +79,7 @@
                         <div class="login_part_form_iner">
                             
                             <?php echo $__env->make('template/notif', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-                            <h2 style="margin-left:3%; margin-bottom:10%;" class="text-primary" >Aplikasi Inventaris Barang dan Kasir.</h2>
+                            <h2 style="margin-left:3%; margin-bottom:10%;" class="text-primary" >Aplikasi Point of Sale.</h2>
                             <form action="<?php echo e(site_url('sistem/login/login_process')); ?>" method="post">
                                 <div class="col-md-12 form-group p_star">
                                     <input type="text" class="form-control" type="username" name="username"

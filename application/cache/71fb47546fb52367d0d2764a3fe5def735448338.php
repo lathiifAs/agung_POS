@@ -47,16 +47,36 @@
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <label>Nama* </label>
+                                    <label>Kode Barang<span style="color:red">*</span> </label>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <input type="text" name="nama" class="form-control"
+                                                <input type="number" name="barang_kd" class="form-control"
+                                                    placeholder="Isian kode barang...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label>Nama<span style="color:red">*</span> </label>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="text" name="barang_nm" class="form-control"
                                                     placeholder="Isian nama...">
                                             </div>
                                         </div>
                                     </div>
-                                    <label>Stok* </label>
+                                    <label>Harga<span style="color:red">*</span> </label>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="text" id="formatnumber" name="harga" class="form-control"
+                                                    placeholder="Isian harga...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Stok<span style="color:red">*</span> </label>
                                     <div class="row">
                                         <div class="col-md-12">
                                         <div class="form-group">
@@ -65,7 +85,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <label>Satuan* </label>
+                                    <label>Satuan<span style="color:red">*</span> </label>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -74,18 +94,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Harga* </label>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <input type="text" name="harga" class="form-control"
-                                                    placeholder="Isian harga...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <label>Status* </label>
+                                    <label>Status<span style="color:red">*</span> </label>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -111,3 +120,19 @@
         </div>
     </div>
 </div>
+
+<?php $__env->startPush('ext_js'); ?>
+    <script>
+        var formatnumber = document.getElementById('formatnumber');
+        formatnumber.addEventListener('keyup', function () {
+            var val = this.value;
+            val = val.replace(/[^0-9\.]/g, '');
+            if (val != "") {
+                valArr = val.split('.');
+                valArr[0] = (parseInt(valArr[0], 10)).toLocaleString();
+                val = valArr.join('.');
+            }
+            this.value = val;
+        });
+    </script>
+    <?php $__env->stopPush(); ?>

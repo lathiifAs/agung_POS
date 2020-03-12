@@ -10,7 +10,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb m-0 p-0">
                         <li class="breadcrumb-item"><a href="" class="text-muted">Master</a></li>
-                        <li class="breadcrumb-item"><a href="{{ site_url('master/user') }}"
+                        <li class="breadcrumb-item"><a href="{{ site_url('master/barang') }}"
                                 class="text-muted">{{ $title }}</a></li>
                         <li class="breadcrumb-item text-muted active" aria-current="page">Detail</li>
                     </ol>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-lg-2">
                             <div class="text-right">
-                                <a href="{{ site_url('master/user') }}" type="submit"
+                                <a href="{{ site_url('master/barang') }}" type="submit"
                                     class="btn btn-primary">Kembali</a>
                             </div>
                         </div>
@@ -45,57 +45,45 @@
                     <div class="form-body">
                         <div class="row">
                             <div class="col-lg-6">
+                                <label><b>Kode Barang </b></label>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">{{ $result['barang_kd'] }}</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <label><b>Nama </b></label>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">{{ $result['nama'] }}</label>
+                                            <label class="control-label">{{ $result['barang_nm'] }}</label>
                                         </div>
                                     </div>
                                 </div>
-                                <label><b>Jenis Kelamin </b></label>
+                                <label><b>Harga </b></label>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            @if ($result['jns_kelamin'] == 'L')
-                                            <label class="control-label">Laki-laki</label>
-                                            @else
-                                            <label class="control-label">Perempuan</label>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <label><b>Hak Akses </b></label>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label">{{ $result['role_nm'] }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <label><b>Alamat</b> </label>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label">{{ $result['alamat'] }}</label>
+                                            <label class="control-label">Rp. {{ number_format($result['harga']) }}</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <label><b>Email</b> </label>
+                                <label><b>Stok</b> </label>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">{{ $result['user_mail'] }}</label>
+                                            <label class="control-label">{{ $result['stok'] }}</label>
                                         </div>
                                     </div>
                                 </div>
-                                <label><b>Username</b> </label>
+                                <label><b>Satuan</b> </label>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">{{ $result['user_name'] }}</label>
+                                            <label class="control-label">{{ $result['satuan'] }}</label>
 
                                         </div>
                                     </div>
@@ -104,36 +92,11 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            @if ($result['user_st'] == 0)
-                                            <span class="badge badge-danger">tidak aktif</span>
-                                            @elseif ($result['user_st'] == 1)
+                                            @if ($result['active_st'] == 'yes')
                                             <span class="badge badge-success">aktif</span>
-                                            @elseif ($result['user_st'] == 2)
-                                            <span class="badge badge-danger">Block</span>
+                                            @else
+                                            <span class="badge badge-danger">tidak aktif</span>
                                             @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <label><b> Created by </b> </label>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label">{{ $result['mdb_name'] }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <label><b> Date update </b> </label>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label">{{ $result['mdd'] }}</label>
                                         </div>
                                     </div>
                                 </div>

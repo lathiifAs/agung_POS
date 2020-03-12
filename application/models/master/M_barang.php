@@ -61,6 +61,23 @@ class M_barang extends Artdev_Model {
         return array();
     }
 
+    //get by id
+    public function get_by_id($barang_id)
+    {
+        $this->db->select('*');
+        $this->db->from('barang');
+        $this->db->where('barang_id', $barang_id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+          $result = $query->row_array();
+          $query->free_result();
+          return $result;
+        }
+        return array();
+    }
+
+
+
   //   //get all roles
   //   public function get_user_login_all_roles($username, $password)
   //   {
@@ -137,23 +154,6 @@ class M_barang extends Artdev_Model {
   //       return array();
   //   }
 
-  //   //get by id
-  //   public function get_by_id($user_id)
-  //   {
-  //       $this->db->select('com_user.user_id, com_user.mdb_name, com_user.user_name, com_user.user_mail, com_user.user_st, com_user.mdb, com_role.role_id ,com_user.mdd, com_role.role_nm, user.*');
-  //       $this->db->from('com_user');
-  //       $this->db->join('user', 'user.user_id = com_user.user_id', 'left');
-  //       $this->db->join('com_role_user', 'com_role_user.user_id = user.user_id', 'left');
-  //       $this->db->join('com_role', 'com_role_user.role_id = com_role.role_id', 'left');
-  //       $this->db->where('com_user.user_id', $user_id);
-  //       $query = $this->db->get();
-  //       if ($query->num_rows() > 0) {
-  //         $result = $query->row_array();
-  //         $query->free_result();
-  //         return $result;
-  //       }
-  //       return array();
-  //   }
 
   //   //cek email
   //   public function is_exist_email($params)

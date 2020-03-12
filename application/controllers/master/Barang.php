@@ -150,62 +150,27 @@ class Barang extends Artdev_Controller {
 		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk C  atau create Data) *wajib
 		$this->_set_page_rule("C");
         // cek input
-        $this->form_validation->set_rules('user_mail', 'User Email', 'trim|required|valid_email|max_length[50]');
-		$this->form_validation->set_rules('user_name', 'User Name', 'trim|required|max_length[50]');
-		$this->form_validation->set_rules('jns_kelamin', 'Jenis Kelamin', 'trim|required|max_length[1]');
-        $this->form_validation->set_rules('nama', 'Nama', 'trim|required|max_length[50]');
-        $this->form_validation->set_rules('user_pass', 'Password', 'trim|required|max_length[50]');
-        $this->form_validation->set_rules('user_st', 'Status', 'trim|required|max_length[1]');
-        $this->form_validation->set_rules('role_id', 'Hak Akses', 'required');
-		// check email
-		$email = trim($this->input->post('user_mail'));
-        if ($this->M_barang->is_exist_email($email)) {
-            //menampilkan sukses notif
-			$this->notif_msg('master/barang/add', 'Error', 'Email telah terdaftar');
-		}
-        // check username
-        $username = trim($this->input->post('user_name'));
-        if ($this->M_barang->is_exist_username($username)) {
-			//sukses notif
-			$this->notif_msg('master/barang/add', 'Error', 'Username telah digunakan');
-		}
-
+        $this->form_validation->set_rules('barang_kd', '', 'trim|required');
+        $this->form_validation->set_rules('barang_nm', '', 'required|max_length[50]');
+		$this->form_validation->set_rules('stok', '', 'trim|required');
+		$this->form_validation->set_rules('satuan', '', 'trim|required');
+		$this->form_validation->set_rules('harga', '', 'trim|required');
+		$this->form_validation->set_rules('active_st', '', 'trim|required');
         // process
         if ($this->form_validation->run() !== FALSE) {
-            $password_key = abs(crc32($this->input->post('user_pass', true)));
-            $password = $this->encrypt->encode(md5($this->input->post('user_pass', true)), $password_key);
-			// generate user_id
-			$prefix = date('ymd');
-			$params_prefix = $prefix . '%';
-			$user_id = $this->M_barang->generate_id($prefix, $params_prefix);
+			//format number
+			$harga = preg_replace("/[^a-zA-Z0-9]/", "", $this->input->post('harga',TRUE));
 			$params = array(
-				'user_id'		=> $user_id,
-				'user_name'		=> $this->input->post('user_name'), 
-				'user_pass'		=> $password, 
-				'user_key' 		=> $password_key, 
-				'default_page' 	=> 'welcome', 
-				'user_st'		=> $this->input->post('user_st'), 
-				'user_mail'		=> $this->input->post('user_mail'),
-				'mdb'			=> $this->get_login('user_id'),
-				'mdb_name'		=> $this->get_login('user_name'),
+				'barang_kd'		=> $this->input->post('barang_kd'), 
+				'barang_nm'		=> $this->input->post('barang_nm'), 
+				'stok'			=> $this->input->post('stok'), 
+				'satuan'		=> $this->input->post('satuan'), 
+				'harga' 		=> $harga, 
+				'active_st' 	=> $this->input->post('active_st'), 
 				'mdd'			=> date('Y-m-d H:i:s') 
 			);
             // insert
-            if ($this->M_barang->insert('com_user', $params)) {
-                // insert to users
-                $params = array(
-					'user_id'		=>	$user_id, 
-					'nama'			=> 	$this->input->post('nama'), 
-					'alamat'		=>	$this->input->post('alamat'), 
-					'jns_kelamin'	=>	$this->input->post('jns_kelamin')
-				);
-                $this->M_barang->insert('user',$params);
-				// insert hak akses
-				$params = array(
-					'user_id'		=>	$user_id, 
-					'role_id'		=> 	$this->input->post('role_id')
-				);
-                $this->M_barang->insert('com_role_user', $params);
+            if ($this->M_barang->insert('barang', $params)) {
 				//sukses notif
 				$this->notif_msg('master/barang/add', 'Sukses', 'Data berhasil ditambahkan');
             } else {
@@ -214,158 +179,136 @@ class Barang extends Artdev_Controller {
             }
         } else {
 			// default error
-			$this->notif_msg('master/barang/add', 'Error', 'Data gagal ditambahkan');
+			$this->notif_msg('master/barang/add', 'Error', 'Data gagal ditambahkan, form harus diisi dengan lengkap dan sesuai.');
         }
     }
 
-	// public function detail($user_id='')
-	// {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk R atau Read Data) *wajib
-	// 	$this->_set_page_rule("R");
-	// 	//cek data
-	// 	if (empty($user_id)) {
-	// 		// default error
-	// 		$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan !');
-	// 	}
+	public function detail($barang_id='')
+	{
+		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk R atau Read Data) *wajib
+		$this->_set_page_rule("R");
+		//cek data
+		if (empty($barang_id)) {
+			// default error
+			$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan !');
+		}
 
-	// 	//parsing
-	// 	$data = [
-	// 		'result' => $this->M_barang->get_by_id($user_id)
-	// 	];
-	// 	$this->parsing_template('master/barang/detail', $data);
-	// }
+		//parsing
+		$data = [
+			'result' => $this->M_barang->get_by_id($barang_id)
+		];
+		$this->parsing_template('master/barang/detail', $data);
+	}
 
-	// public function delete($user_id='')
-	// {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk D atau Delete) *wajib
-	// 	$this->_set_page_rule("D");
-	// 	//cek data
-	// 	if (empty($user_id)) {
-	// 		// default error
-	// 		$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan !');
-	// 	}
+	public function edit($barang_id='')
+	{
+		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk U atau Update data) *wajib
+		$this->_set_page_rule("U");
+		//default notif
+		$notif = $this->session->userdata('sess_notif');
+		//cek data
+		if (empty($barang_id)) {
+			// default error
+			$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan !');
+		}
+		//parsing
+		$data = [
+			'tipe'		=> $notif['tipe'],
+			'pesan' 	=> $notif['pesan'],
+			'result' 	=> $this->M_barang->get_by_id($barang_id),
+		];
+		//delete session notif
+		$this->session->unset_userdata('sess_notif');
+		//parsing and view content
+		$this->parsing_template('master/barang/edit', $data);
+	}
 
-	// 	//parsing
-	// 	$data = [
-	// 		'result' => $this->M_barang->get_by_id($user_id)
-	// 	];
-	// 	$this->parsing_template('master/barang/delete', $data);
-	// }
+	// edit process
+	public function edit_process() {
+		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini U untuk Update data) *wajib
+		$this->_set_page_rule("U");
+        // cek input
+        $this->form_validation->set_rules('barang_kd', '', 'trim|required');
+        $this->form_validation->set_rules('barang_nm', '', 'required|max_length[50]');
+		$this->form_validation->set_rules('satuan', '', 'trim|required');
+		$this->form_validation->set_rules('harga', '', 'trim|required');
+		$this->form_validation->set_rules('active_st', '', 'trim|required');
+		// check data
+        if (empty($this->input->post('barang_id'))) {
+            //sukses notif
+			$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan');
+		}
+		$barang_id = $this->input->post('barang_id', true);
+		//format number
+		$harga = preg_replace("/[^a-zA-Z0-9]/", "", $this->input->post('harga',TRUE));
 
-	// public function delete_process()
-	// {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk D atau Delete) *wajib
-	// 	$this->_set_page_rule("D");
-	// 	$user_id = $this->input->post('user_id', true);
-	// 	//cek data
-	// 	if (empty($user_id)) {
-	// 		// default error
-	// 		$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan !');
-	// 	}
+        // process
+        if ($this->form_validation->run() !== FALSE) {
+			$params = array(
+				'barang_kd'	=> $this->input->post('barang_kd'), 
+				'barang_nm'	=> $this->input->post('barang_nm'), 
+				'satuan'	=> $this->input->post('satuan'), 
+				'harga'		=> $harga,
+				'active_st'	=> $this->input->post('active_st'),
+				'mdd'		=> date('Y-m-d H:i:s') 
+			);
+			$where = array(
+				'barang_id'	=> $barang_id
+			);
 
-	// 	$where = array(
-	// 		'user_id' => $user_id
-	// 	);
-	// 	//process
-	// 	if ($this->M_barang->delete('com_user', $where)) {
-	// 		//sukses notif
-	// 		$this->notif_msg('master/barang', 'Sukses', 'Data berhasil dihapus');
-	// 	}else{
-	// 		//default error
-	// 		$this->notif_msg('master/barang', 'Error', 'Data gagal dihapus !');
-	// 	}
-	// }
+            // insert
+            if ($this->M_barang->update('barang', $params, $where)) {
+				$this->notif_msg('master/barang/edit/'.$barang_id, 'Sukses', 'Data berhasil diedit');
+            } else {
+				// default error
+				$this->notif_msg('master/barang/edit/'.$barang_id, 'Error', 'Data gagal diedit');
+            }
+        } else {
+			// default error
+			$this->notif_msg('master/barang/edit/'.$barang_id, 'Error', 'Data gagal diedit, form harus diisi dengan lengkap dan sesuai.');
+        }
+    }
 
-	// public function edit($user_id='')
-	// {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk U atau Update data) *wajib
-	// 	$this->_set_page_rule("U");
-	// 	//default notif
-	// 	$notif = $this->session->userdata('sess_notif');
-	// 	//cek data
-	// 	if (empty($user_id)) {
-	// 		// default error
-	// 		$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan !');
-	// 	}
-	// 	// get all role
-	// 	$all_role = $this->M_barang->get_all_role();
-	// 	//parsing
-	// 	$data = [
-	// 		'tipe'		=> $notif['tipe'],
-	// 		'pesan' 	=> $notif['pesan'],
-	// 		'result' 	=> $this->M_barang->get_by_id($user_id),
-	// 		'roles'		=> $all_role	
-	// 	];
-	// 	//delete session notif
-	// 	$this->session->unset_userdata('sess_notif');
-	// 	//parsing and view content
-	// 	$this->parsing_template('master/barang/edit', $data);
-	// }
 
-	// // edit process
-	// public function edit_process() {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini U untuk Update data) *wajib
-	// 	$this->_set_page_rule("U");
-    //     // cek input
-    //     $this->form_validation->set_rules('user_mail', 'User Email', 'trim|required|valid_email|max_length[50]');
-	// 	$this->form_validation->set_rules('user_name', 'User Name', 'trim|required|max_length[50]');
-	// 	$this->form_validation->set_rules('jns_kelamin', 'Jenis Kelamin', 'trim|required|max_length[1]');
-    //     $this->form_validation->set_rules('nama', 'Nama', 'trim|required|max_length[50]');
-    //     $this->form_validation->set_rules('user_st', 'Status', 'trim|required|max_length[1]');
-    //     $this->form_validation->set_rules('role_id', 'Hak Akses', 'required');
-	// 	// check data
-    //     if (empty($this->input->post('user_id'))) {
-    //         //sukses notif
-	// 		$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan');
-	// 	}
-	// 	$user_id = $this->input->post('user_id');
-    //     // process
-    //     if ($this->form_validation->run() !== FALSE) {
-	// 		//with password or no
-	// 		if (!empty($this->input->post('user_pass'))) {
-	// 			$password_key = abs(crc32($this->input->post('user_pass', true)));
-	// 			$password = $this->encrypt->encode(md5($this->input->post('user_pass', true)), $password_key);
-	// 			$params = array(
-	// 				'user_name'	=> $this->input->post('user_name'), 
-	// 				'user_pass'	=> $password, 
-	// 				'user_key' 	=> $password_key, 
-	// 				'user_st'	=> $this->input->post('user_st'), 
-	// 				'user_mail'	=> $this->input->post('user_mail'),
-	// 				'mdd'		=> date('Y-m-d H:i:s') 
-	// 			);
-	// 		}else{
-	// 			$params = array(
-	// 				'user_name'	=> $this->input->post('user_name'),
-	// 				'user_st'	=> $this->input->post('user_st'), 
-	// 				'user_mail'	=> $this->input->post('user_mail')
-	// 			);
-	// 		}
-	// 		$where = array(
-	// 			'user_id'	=> $user_id
-	// 		);
-    //         // insert
-    //         if ($this->M_barang->update('com_user', $params, $where)) {
-    //             // insert to users
-    //             $params = array(
-	// 				'nama'			=> 	$this->input->post('nama'), 
-	// 				'alamat'		=>	$this->input->post('alamat'), 
-	// 				'jns_kelamin'	=>	$this->input->post('jns_kelamin')
-	// 			);
-    //             $this->M_barang->update('user', $params, $where);
-	// 			// insert hak akses
-	// 			$params = array(
-	// 				'role_id'		=> 	$this->input->post('role_id')
-	// 			);
-    //             $this->M_barang->update('com_role_user', $params, $where);
-	// 			//sukses notif
-	// 			$this->notif_msg('master/barang/edit/'.$user_id, 'Sukses', 'Data berhasil diedit');
-    //         } else {
-	// 			// default error
-	// 			$this->notif_msg('master/barang/edit/'.$user_id, 'Error', 'Data gagal diedit');
-    //         }
-    //     } else {
-	// 		// default error
-	// 		$this->notif_msg('master/barang/edit/'.$user_id, 'Error', 'Data gagal diedit');
-    //     }
-    // }
+	public function delete($barang_id='')
+	{
+		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk D atau Delete) *wajib
+		$this->_set_page_rule("D");
+		//cek data
+		if (empty($barang_id)) {
+			// default error
+			$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan !');
+		}
+
+		//parsing
+		$data = [
+			'result' => $this->M_barang->get_by_id($barang_id)
+		];
+		$this->parsing_template('master/barang/delete', $data);
+	}
+
+	public function delete_process()
+	{
+		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk D atau Delete) *wajib
+		$this->_set_page_rule("D");
+		$barang_id = $this->input->post('barang_id', true);
+		//cek data
+		if (empty($barang_id)) {
+			// default error
+			$this->notif_msg('master/barang', 'Error', 'Data tidak ditemukan !');
+		}
+
+		$where = array(
+			'barang_id' => $barang_id
+		);
+		//process
+		if ($this->M_barang->delete('barang', $where)) {
+			//sukses notif
+			$this->notif_msg('master/barang', 'Sukses', 'Data berhasil dihapus');
+		}else{
+			//default error
+			$this->notif_msg('master/barang', 'Error', 'Data gagal dihapus !');
+		}
+	}
+
 }

@@ -4,14 +4,15 @@
 <div class="page-breadcrumb">
     <div class="row">
         <div class="col-7 align-self-center">
-            <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">{{ $title }}
+            <h4 class="page-title text-truncate text-dark font-weight-medium mb-1"><?php echo e($title); ?>
+
             </h4>
             <div class="d-flex align-items-center">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb m-0 p-0">
                         <li class="breadcrumb-item"><a href="" class="text-muted">Master</a></li>
-                        <li class="breadcrumb-item"><a href="{{ site_url('master/barang') }}"
-                                class="text-muted">{{ $title }}</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo e(site_url('master/barang')); ?>"
+                                class="text-muted"><?php echo e($title); ?></a></li>
                         <li class="breadcrumb-item text-muted active" aria-current="page">Hapus Data</li>
                     </ol>
                 </nav>
@@ -25,8 +26,8 @@
 <!-- End Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
 <div class="container-fluid">
-    <form action="{{ site_url('master/barang/delete_process') }}" method="post">
-        <input type="hidden" name="barang_id" value="{{ $result['barang_id'] }}">
+    <form action="<?php echo e(site_url('master/barang/delete_process')); ?>" method="post">
+        <input type="hidden" name="barang_id" value="<?php echo e($result['barang_id']); ?>">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -37,7 +38,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="text-right">
-                                    <a href="{{ site_url('master/barang') }}" type="submit"
+                                    <a href="<?php echo e(site_url('master/barang')); ?>" type="submit"
                                         class="btn btn-primary">Kembali</a>
                                 </div>
                             </div>
@@ -53,7 +54,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">{{ $result['barang_kd'] }}</label>
+                                            <label class="control-label"><?php echo e($result['barang_kd']); ?></label>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +62,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">{{ $result['barang_nm'] }}</label>
+                                            <label class="control-label"><?php echo e($result['barang_nm']); ?></label>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +70,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">Rp. {{ number_format($result['harga']) }}</label>
+                                            <label class="control-label">Rp. <?php echo e(number_format($result['harga'])); ?></label>
                                         </div>
                                     </div>
                                 </div>
@@ -79,7 +80,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">{{ $result['stok'] }}</label>
+                                            <label class="control-label"><?php echo e($result['stok']); ?></label>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +88,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">{{ $result['satuan'] }}</label>
+                                            <label class="control-label"><?php echo e($result['satuan']); ?></label>
 
                                         </div>
                                     </div>
@@ -96,11 +97,11 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            @if ($result['active_st'] == 'yes')
+                                            <?php if($result['active_st'] == 'yes'): ?>
                                             <span class="badge badge-success">aktif</span>
-                                            @else
+                                            <?php else: ?>
                                             <span class="badge badge-danger">tidak aktif</span>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
