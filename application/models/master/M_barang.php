@@ -76,6 +76,37 @@ class M_barang extends Artdev_Model {
         return array();
     }
 
+    //get stok by id
+    public function get_stok_by_id($barang_id)
+    {
+        $this->db->select('stok');
+        $this->db->from('barang');
+        $this->db->where('barang_id', $barang_id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+          $result = $query->row_array();
+          $query->free_result();
+          return $result['stok'];
+        }
+        return array();
+    }
+
+    //tambah stok
+    public function tambah_stok($params)
+    {
+        $this->db->select('');
+        $this->db->from('barang');
+        $this->db->where('barang_id', $barang_id);
+        $query = $this->db->get();
+        $query = $this->db->query($sql, $params);
+        if ($query->num_rows() > 0) {
+          $result = $query->row_array();
+          $query->free_result();
+          return $result;
+        }
+        return array();
+    }
+
 
 
   //   //get all roles

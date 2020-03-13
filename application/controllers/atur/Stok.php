@@ -12,7 +12,7 @@ Phone : 	082126641201
 class Stok extends Artdev_Controller {
 
 	//init serach name
-	const SESSION_SEARCH = 'search_barang';
+	const SESSION_SEARCH = 'search_barang_instok';
     // constructor
 	public function __construct()
 	{
@@ -129,186 +129,67 @@ class Stok extends Artdev_Controller {
 		redirect("atur/stok");
 	}
 
-	// public function add()
-	// {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk C  atau create Data) *wajib
-	// 	$this->_set_page_rule("C");
-	// 	//default notif 
-	// 	$notif = $this->session->userdata('sess_notif');
-	// 	$data = [
-	// 		'tipe'	=> $notif['tipe'],
-	// 		'pesan' => $notif['pesan']
-	// 	];
-	// 	//delete session notif
-	// 	$this->session->unset_userdata('sess_notif');
-	// 	//parsing (template_content, variabel_parsing)
-	// 	$this->parsing_template('atur/stok/add', $data);
-	// }
+	 // tambah stok
+	 public function add_stok() {
+		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk C  atau create Data) *wajib
+		$this->_set_page_rule("U");
+        // cek input
+        $this->form_validation->set_rules('jumlah', '', 'trim|required');
+		$this->form_validation->set_rules('barang_id', '', 'trim|required');
 
-	//  // add process
-	//  public function add_process() {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk C  atau create Data) *wajib
-	// 	$this->_set_page_rule("C");
-    //     // cek input
-    //     $this->form_validation->set_rules('barang_kd', '', 'trim|required');
-    //     $this->form_validation->set_rules('barang_nm', '', 'required|max_length[50]');
-	// 	$this->form_validation->set_rules('stok', '', 'trim|required');
-	// 	$this->form_validation->set_rules('satuan', '', 'trim|required');
-	// 	$this->form_validation->set_rules('harga', '', 'trim|required');
-	// 	$this->form_validation->set_rules('active_st', '', 'trim|required');
-    //     // process
-    //     if ($this->form_validation->run() !== FALSE) {
-	// 		//format number
-	// 		$harga = preg_replace("/[^a-zA-Z0-9]/", "", $this->input->post('harga',TRUE));
-	// 		$params = array(
-	// 			'barang_kd'		=> $this->input->post('barang_kd'), 
-	// 			'barang_nm'		=> $this->input->post('barang_nm'), 
-	// 			'stok'			=> $this->input->post('stok'), 
-	// 			'satuan'		=> $this->input->post('satuan'), 
-	// 			'harga' 		=> $harga, 
-	// 			'active_st' 	=> $this->input->post('active_st'), 
-	// 			'mdd'			=> date('Y-m-d H:i:s') 
-	// 		);
-    //         // insert
-    //         if ($this->M_barang->insert('barang', $params)) {
-	// 			//sukses notif
-	// 			$this->notif_msg('atur/stok/add', 'Sukses', 'Data berhasil ditambahkan');
-    //         } else {
-	// 			// default error
-	// 			$this->notif_msg('atur/stok/add', 'Error', 'Data gagal ditambahkan');
-    //         }
-    //     } else {
-	// 		// default error
-	// 		$this->notif_msg('atur/stok/add', 'Error', 'Data gagal ditambahkan, form harus diisi dengan lengkap dan sesuai.');
-    //     }
-    // }
+        // process
+        if ($this->form_validation->run() !== FALSE) {
+			$get_stok = $this->M_barang->get_stok_by_id($this->input->post('barang_id'));
+			$params = array(
+				'stok' 		=> ($get_stok + $this->input->post('jumlah')),
+			);
+			$where = array(
+				'barang_id' => $this->input->post('barang_id')
+			);
+            // insert
+            if ($this->M_barang->update('barang', $params, $where)) {
+				//sukses notif
+				$this->notif_msg('atur/stok', 'Sukses', 'Stok berhasil ditambahkan');
+            } else {
+				// default error
+				$this->notif_msg('atur/stok', 'Error', 'Stok gagal ditambahkan');
+            }
+        } else {
+			// default error
+			$this->notif_msg('atur/stok', 'Error', 'Stok gagal ditambahkan, form harus diisi dengan lengkap dan sesuai.');
+        }
+	}
+	
+		 // tambah stok
+		 public function kurangi_stok() {
+			// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk C  atau create Data) *wajib
+			$this->_set_page_rule("U");
+			// cek input
+			$this->form_validation->set_rules('jumlah', '', 'trim|required');
+			$this->form_validation->set_rules('barang_id', '', 'trim|required');
+	
+			// process
+			if ($this->form_validation->run() !== FALSE) {
+				$get_stok = $this->M_barang->get_stok_by_id($this->input->post('barang_id'));
+				$params = array(
+					'stok' 		=> ($get_stok - $this->input->post('jumlah')),
+				);
+				$where = array(
+					'barang_id' => $this->input->post('barang_id')
+				);
+				// insert
+				if ($this->M_barang->update('barang', $params, $where)) {
+					//sukses notif
+					$this->notif_msg('atur/stok', 'Sukses', 'Stok berhasil dikurangi');
+				} else {
+					// default error
+					$this->notif_msg('atur/stok', 'Error', 'Stok gagal dikurangi');
+				}
+			} else {
+				// default error
+				$this->notif_msg('atur/stok', 'Error', 'Stok gagal dikurangi, form harus diisi dengan lengkap dan sesuai.');
+			}
+		}
 
-	// public function detail($barang_id='')
-	// {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk R atau Read Data) *wajib
-	// 	$this->_set_page_rule("R");
-	// 	//cek data
-	// 	if (empty($barang_id)) {
-	// 		// default error
-	// 		$this->notif_msg('atur/stok', 'Error', 'Data tidak ditemukan !');
-	// 	}
-
-	// 	//parsing
-	// 	$data = [
-	// 		'result' => $this->M_barang->get_by_id($barang_id)
-	// 	];
-	// 	$this->parsing_template('atur/stok/detail', $data);
-	// }
-
-	// public function edit($barang_id='')
-	// {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk U atau Update data) *wajib
-	// 	$this->_set_page_rule("U");
-	// 	//default notif
-	// 	$notif = $this->session->userdata('sess_notif');
-	// 	//cek data
-	// 	if (empty($barang_id)) {
-	// 		// default error
-	// 		$this->notif_msg('atur/stok', 'Error', 'Data tidak ditemukan !');
-	// 	}
-	// 	//parsing
-	// 	$data = [
-	// 		'tipe'		=> $notif['tipe'],
-	// 		'pesan' 	=> $notif['pesan'],
-	// 		'result' 	=> $this->M_barang->get_by_id($barang_id),
-	// 	];
-	// 	//delete session notif
-	// 	$this->session->unset_userdata('sess_notif');
-	// 	//parsing and view content
-	// 	$this->parsing_template('atur/stok/edit', $data);
-	// }
-
-	// // edit process
-	// public function edit_process() {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini U untuk Update data) *wajib
-	// 	$this->_set_page_rule("U");
-    //     // cek input
-    //     $this->form_validation->set_rules('barang_kd', '', 'trim|required');
-    //     $this->form_validation->set_rules('barang_nm', '', 'required|max_length[50]');
-	// 	$this->form_validation->set_rules('satuan', '', 'trim|required');
-	// 	$this->form_validation->set_rules('harga', '', 'trim|required');
-	// 	$this->form_validation->set_rules('active_st', '', 'trim|required');
-	// 	// check data
-    //     if (empty($this->input->post('barang_id'))) {
-    //         //sukses notif
-	// 		$this->notif_msg('atur/stok', 'Error', 'Data tidak ditemukan');
-	// 	}
-	// 	$barang_id = $this->input->post('barang_id', true);
-	// 	//format number
-	// 	$harga = preg_replace("/[^a-zA-Z0-9]/", "", $this->input->post('harga',TRUE));
-
-    //     // process
-    //     if ($this->form_validation->run() !== FALSE) {
-	// 		$params = array(
-	// 			'barang_kd'	=> $this->input->post('barang_kd'), 
-	// 			'barang_nm'	=> $this->input->post('barang_nm'), 
-	// 			'satuan'	=> $this->input->post('satuan'), 
-	// 			'harga'		=> $harga,
-	// 			'active_st'	=> $this->input->post('active_st'),
-	// 			'mdd'		=> date('Y-m-d H:i:s') 
-	// 		);
-	// 		$where = array(
-	// 			'barang_id'	=> $barang_id
-	// 		);
-
-    //         // insert
-    //         if ($this->M_barang->update('barang', $params, $where)) {
-	// 			$this->notif_msg('atur/stok/edit/'.$barang_id, 'Sukses', 'Data berhasil diedit');
-    //         } else {
-	// 			// default error
-	// 			$this->notif_msg('atur/stok/edit/'.$barang_id, 'Error', 'Data gagal diedit');
-    //         }
-    //     } else {
-	// 		// default error
-	// 		$this->notif_msg('atur/stok/edit/'.$barang_id, 'Error', 'Data gagal diedit, form harus diisi dengan lengkap dan sesuai.');
-    //     }
-    // }
-
-
-	// public function delete($barang_id='')
-	// {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk D atau Delete) *wajib
-	// 	$this->_set_page_rule("D");
-	// 	//cek data
-	// 	if (empty($barang_id)) {
-	// 		// default error
-	// 		$this->notif_msg('atur/stok', 'Error', 'Data tidak ditemukan !');
-	// 	}
-
-	// 	//parsing
-	// 	$data = [
-	// 		'result' => $this->M_barang->get_by_id($barang_id)
-	// 	];
-	// 	$this->parsing_template('atur/stok/delete', $data);
-	// }
-
-	// public function delete_process()
-	// {
-	// 	// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk D atau Delete) *wajib
-	// 	$this->_set_page_rule("D");
-	// 	$barang_id = $this->input->post('barang_id', true);
-	// 	//cek data
-	// 	if (empty($barang_id)) {
-	// 		// default error
-	// 		$this->notif_msg('atur/stok', 'Error', 'Data tidak ditemukan !');
-	// 	}
-
-	// 	$where = array(
-	// 		'barang_id' => $barang_id
-	// 	);
-	// 	//process
-	// 	if ($this->M_barang->delete('barang', $where)) {
-	// 		//sukses notif
-	// 		$this->notif_msg('atur/stok', 'Sukses', 'Data berhasil dihapus');
-	// 	}else{
-	// 		//default error
-	// 		$this->notif_msg('atur/stok', 'Error', 'Data gagal dihapus !');
-	// 	}
-	// }
 
 }

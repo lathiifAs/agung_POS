@@ -36,7 +36,7 @@
                         <div class="row">
                             <h4 class="card-title col-lg-12">Daftar Barang</h4>
                         </div>
-                        <form class="col-lg-12 row" action="{{ site_url('master/barang/search_process') }}" method="POST">
+                        <form class="col-lg-12 row" action="{{ site_url('atur/stok/search_process') }}" method="POST">
                             <div class="col-lg-3">
                                 <input type="text" class="form-control" id="nametext" aria-describedby="name"
                                     placeholder="Kode Barang" name="barang_kd" value="{{ $search['barang_kd'] }}">
@@ -74,11 +74,11 @@
                                     <td class="text-align text-center">{{ $rs['stok'] }}</td>
                                     <td class="text-align text-center">{{ $rs['satuan'] }}</td>
                                     <td>
-                                        <a href="{{ site_url('master/barang/edit/'.$rs['barang_id']) }}"
-                                            class="btn btn-danger btn-rounded m-b-10 m-l-5" title="Edit"><i
-                                                class="ti-mines"></i> -</a>
-                                        <a href="{{ site_url('master/barang/edit/'.$rs['barang_id']) }}"
-                                            class="btn btn-success btn-rounded m-b-10 m-l-5" title="Edit"><i
+                                    <a href="#"
+                                            class="btn btn-danger btn-rounded m-b-10 m-l-5 modalkurangi"  data-toggle="modal" data-id="{{ $rs['barang_id'] }}" href="#modal" title="Edit"><i
+                                                class="ti-pluss"></i> -</a>
+                                        <a href="#"
+                                            class="btn btn-success btn-rounded m-b-10 m-l-5 modaltambah"  data-toggle="modal" data-id="{{ $rs['barang_id'] }}" href="#modal" title="Edit"><i
                                                 class="ti-pluss"></i> +</a>
                                     </td>
                                 </tr>
@@ -101,3 +101,67 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Tambah -->
+<form class="col-lg-12 row" action="{{ site_url('atur/stok/add_stok') }}" method="POST">
+  <div class="modal fade" id="modaltambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Tambah Stok</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="barang_id" class="barang_id" value="">
+          <input type="number" placeholder="Jumlah" name="jumlah" style="text-align:center;" class="form-control">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Modal Kurang -->
+<form class="col-lg-12 row" action="{{ site_url('atur/stok/kurangi_stok') }}" method="POST">
+  <div class="modal fade" id="modalkurangi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Kurangi Stok</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="barang_id" class="barang_id" value="">
+          <input type="number" placeholder="Jumlah" name="jumlah" style="text-align:center;" class="form-control">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+@push('ext_js')
+<script>
+ $(document).on("click", ".modaltambah", function () {
+      var barang_id = $(this).data('id');
+      $(".modal-body .barang_id").val(barang_id);
+      $('#modaltambah').modal('show');
+  });
+
+  $(document).on("click", ".modalkurangi", function () {
+      var barang_id = $(this).data('id');
+      $(".modal-body .barang_id").val(barang_id);
+      $('#modalkurangi').modal('show');
+  });
+</script>
+@endpush
