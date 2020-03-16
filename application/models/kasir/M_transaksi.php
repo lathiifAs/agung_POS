@@ -1,57 +1,15 @@
 <?php
 
-class M_barang extends Artdev_Model {
-
-    //generate id terakhir
-    public function generate_id($prefixdate, $params)
-    {
-        $sql = "SELECT RIGHT(user_id, 4)'last_number'
-                FROM com_user
-                WHERE user_id LIKE ?
-                ORDER BY user_id DESC
-                LIMIT 1";
-        $query = $this->db->query($sql, $params);
-        if ($query->num_rows() > 0) {
-            $result = $query->row_array();
-            $query->free_result();
-            // create next number
-            $number = intval($result['last_number']) + 1;
-            if ($number > 9999) {
-                return false;
-            }
-            $zero = '';
-            for ($i = strlen($number); $i < 4; $i++) {
-                $zero .= '0';
-            }
-            return $prefixdate . $zero . $number;
-        } else {
-            // create new number
-            return $prefixdate . '0001';
-        }
-    }
-
-    //count all
-    public function count_all()
-    {
-        $this->db->select('*');
-        $this->db->from('barang');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-          $result = $query->num_rows();
-          return $result;
-        }
-        return 0;
-    }
+class M_transaksi extends Artdev_Model {
 
     //get all
-    public function get_all($number,$offset, $params)
+    public function get_list($kasir_id)
     {
-        $this->db->select('*');
-        $this->db->from('barang');
-        if (!empty($params)) {
-          $this->db->like($params);
-        }
-        $this->db->limit($number, $offset); 
+        $this->db->select('a.*, b.harga, b.barang_nm, b.barang_kd');
+        $this->db->from('detail_transaksi a');
+        $this->db->join('barang b', 'a.barang_id = b.barang_id'); 
+        $this->db->where('a.mdb', $kasir_id); 
+        $this->db->where('a.pembayaran_st', 'process'); 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
           $result = $query->result_array();
