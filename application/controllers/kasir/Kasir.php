@@ -152,5 +152,50 @@ class Kasir extends Artdev_Controller {
 		}
 	}
 
+	 // tambah stok
+	 public function insert_transaksi() {
+		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk C  atau create Data) *wajib
+		$this->_set_page_rule("C");
+        // cek input
+		$this->form_validation->set_rules('total_bayar', '', 'trim|required');
+		
+        // process
+        if ($this->form_validation->run() !== FALSE) {
+			$total = $this->input->post('total_bayar', TRUE);
+
+			$params = array(
+				'total' 		=> $total,
+				'mdb' 			=> $this->get_login('user_id'),
+				'mdb_name' 		=> $this->get_login('user_name'),
+				'mdd' 			=> full_date()
+			);
+
+            // insert
+            if ($this->M_transaksi->insert('transaksi', $params)) {
+				$insert_id = $this->M_transaksi->last_insert_id();
+				$params_edit = array(
+					'transaksi_id' 		=> $insert_id,
+					'pembayaran_st' 	=> 'done'
+				);
+				$where = array(
+					'mdb' 				=> $this->get_login('user_id'),
+					'pembayaran_st' 	=> 'process',
+				);
+
+				if (!$this->M_transaksi->update('detail_transaksi', $params_edit, $where)) {
+					// default error
+					$this->notif_msg('kasir/kasir', 'Error', 'Gagal merubah status transaksi.');
+				}
+				//sukses notif
+				$this->notif_msg('kasir/kasir', 'Sukses', 'Data berhasil disimpan.');
+            } else {
+				// default error
+				$this->notif_msg('kasir/kasir', 'Error', 'Gagal insert ke dalam transaksi.');
+            }
+        } else {
+			// default error
+			$this->notif_msg('kasir/kasir', 'Error', 'Data gagal ditambahkan, form harus diisi dengan lengkap dan sesuai.');
+        }
+	}
 
 }

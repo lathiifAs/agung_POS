@@ -79,6 +79,14 @@ class M_transaksi extends Artdev_Model {
         return array();
     }
 
+    //tambah stok
+    public function last_insert_id()
+    {
+        return $this->db->insert_id();
+    }
+    
+   
+
 
 
   //   //get all roles
