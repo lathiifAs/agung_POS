@@ -122,8 +122,34 @@ class Kasir extends Artdev_Controller {
 
 	public function get_list()
 	{
+		
 		$result = $this->M_transaksi->get_list($this->get_login('user_id'));
 		echo json_encode($result);
+	}
+
+	// tambah stok
+	public function remove_list() {
+		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk C  atau create Data) *wajib
+		$this->_set_page_rule("D");
+		// cek input
+		$this->form_validation->set_rules('detail_transaksi_id', '', 'trim|required');
+
+		// process
+		if ($this->form_validation->run() !== FALSE) {
+			$detail_transaksi_id = $this->input->post('detail_transaksi_id', TRUE);
+			$where = array(
+				'detail_transaksi_id' 	=> $detail_transaksi_id,
+			);
+
+			// insert
+			if ($this->M_transaksi->delete('detail_transaksi', $where)) {
+				// //sukses notif
+				echo 1;exit;
+			} else {
+				// default error
+				echo 0;exit;
+			}
+		}
 	}
 
 

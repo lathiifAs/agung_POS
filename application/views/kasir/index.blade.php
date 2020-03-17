@@ -30,7 +30,7 @@
             </div>
             <div class="col-lg-9">
               <div class="text-right text-primary">
-                <b><i><h1><span id="total"></span></h1></i></b>
+                <b><i><h1><span id="total">Rp. 0</span></h1></i></b>
               </div>
             </div>
           </div>
@@ -169,6 +169,27 @@
       });
     }
 
+    $('#tbllist tbody').on('click', '.remove_list', function () {
+      var detail_transaksi_id = $(this).data("id")
+      //send ajax
+      $.ajax({
+          type: "POST",
+          url: "{{ site_url('kasir/kasir/remove_list/') }}",
+          data: {
+              'detail_transaksi_id' : detail_transaksi_id
+          },
+          success: function (result) {
+            if (result == 0) {
+              alert('gagal menghapus barang di list!');
+            }else{
+              //berhasil
+              get_list();
+            }
+          }
+      });
+
+    })
+
     function get_list(){
       //send ajax
       $.ajax({
@@ -177,9 +198,9 @@
           success: function (get_result) {            
             var result = JSON.parse(get_result);
             var total = 0;
-            console.log(result);
+            var html = [];
             $.each(result, function(i, item) {
-              var html = `
+              html.push(`
                 <tr>
                       <td class="text-align text-center">`+item.barang_kd +`</td>
                       <td>`+item.barang_nm +`</td>
@@ -187,15 +208,16 @@
                       <td class="text-align text-center">Rp. `+Number(item.harga).toLocaleString('ES-es') +`</td>
                       <td class="text-align text-center">Rp. `+Number(item.subtotal).toLocaleString('ES-es') +`</td>
                       <td>
-                        <a href="#" class="btn btn-danger btn-rounded m-b-10 m-l-5 modalkurangi" data-toggle="modal"
-                          data-id="{{ $rs['barang_kd'] }}" href="#modal" title="Edit"><i class="ti-trash"></i> </a>
+                        <button type="button" class="btn btn-danger btn-rounded m-b-10 m-l-5 remove_list"
+                          data-id="`+ item.detail_transaksi_id +`" title="Edit"><i class="ti-trash"></i> </button>
                       </td>
                     </tr>
-              `;
+              `);
               total += parseInt(item.subtotal);
-              $("#tbllist tbody").append(html);
                 // alert(item.PageName);
             });
+            
+            $("#tbllist tbody").html(html);
             // console.log(total);
             document.getElementById("total").innerHTML = 'Rp. ' + Number(total).toLocaleString('ES-es');
             // document.getElementById("total").text() = 'tes';
