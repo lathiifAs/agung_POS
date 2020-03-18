@@ -207,13 +207,17 @@
     }
 
     $('#tbllist tbody').on('click', '.remove_list', function () {
-      var detail_transaksi_id = $(this).data("id")
+      var detail_transaksi_id = $(this).data("id");
+      var barang_id = $(this).data("barang")
+      var jumlah = $(this).data("jumlah")
       //send ajax
       $.ajax({
           type: "POST",
           url: "<?php echo e(site_url('kasir/kasir/remove_list/')); ?>",
           data: {
-              'detail_transaksi_id' : detail_transaksi_id
+              'detail_transaksi_id' : detail_transaksi_id,
+              'barang_id' : barang_id,
+              'jumlah' : jumlah
           },
           success: function (result) {
             if (result == 0) {
@@ -245,7 +249,7 @@
                       <td class="text-align text-center">Rp. `+Number(item.subtotal).toLocaleString('ES-es') +`</td>
                       <td>
                         <button type="button" class="btn btn-danger btn-rounded m-b-10 m-l-5 remove_list"
-                          data-id="`+ item.detail_transaksi_id +`" title="Edit"><i class="ti-trash"></i> </button>
+                          data-id="`+ item.detail_transaksi_id +`" data-barang="`+ item.barang_id +`" data-jumlah="`+ item.jumlah +`"  title="Edit"><i class="ti-trash"></i> </button>
                       </td>
                     </tr>
               `);

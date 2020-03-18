@@ -108,6 +108,16 @@ class Kasir extends Artdev_Controller {
 
             // insert
             if ($this->M_transaksi->insert('detail_transaksi', $params)) {
+				//update stok
+				$get_stok = $this->M_barang->get_stok_by_id($barang_id);
+				$params_update = array(
+					'stok' 		=> ($get_stok - $jumlah),
+				);
+				$where_update = array(
+					'barang_id' => $barang_id
+				);
+				// update
+				$this->M_barang->update('barang', $params_update, $where_update);
 				// //sukses notif
 				echo 1;exit;
             } else {
@@ -133,16 +143,31 @@ class Kasir extends Artdev_Controller {
 		$this->_set_page_rule("D");
 		// cek input
 		$this->form_validation->set_rules('detail_transaksi_id', '', 'trim|required');
+		$this->form_validation->set_rules('barang_id', '', 'trim|required');
+		$this->form_validation->set_rules('jumlah', '', 'trim|required');
 
 		// process
 		if ($this->form_validation->run() !== FALSE) {
 			$detail_transaksi_id = $this->input->post('detail_transaksi_id', TRUE);
+			$barang_id = $this->input->post('barang_id', TRUE);
+			$jumlah = $this->input->post('jumlah', TRUE);
+
 			$where = array(
 				'detail_transaksi_id' 	=> $detail_transaksi_id,
 			);
 
 			// insert
 			if ($this->M_transaksi->delete('detail_transaksi', $where)) {
+				//update stok
+				$get_stok = $this->M_barang->get_stok_by_id($barang_id);
+				$params_update = array(
+					'stok' 		=> ($get_stok + $jumlah),
+				);
+				$where_update = array(
+					'barang_id' => $barang_id
+				);
+				// update
+				$this->M_barang->update('barang', $params_update, $where_update);
 				// //sukses notif
 				echo 1;exit;
 			} else {
