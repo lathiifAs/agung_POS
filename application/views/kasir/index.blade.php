@@ -155,6 +155,10 @@
     //init var
     var total = 0;
 
+    $('#konfirmasimodal').on('shown.bs.modal', function () {
+        $('#formatnumber').focus();
+    })    
+
     $(document).ready(function () {
       // $('#bayar').focus()
 
