@@ -108,7 +108,7 @@
                         </div>
                         <div class="row"  style="margin-right:0px">
                             <div class="col-lg-12 text-right">
-                                <h2><b>Total </b>{{ $result['total'] }}</h2>
+                                <h2><b>Total </b>{{ number_format($result['total']) }}</h2>
                             </div>
                         </div>
                     </div>

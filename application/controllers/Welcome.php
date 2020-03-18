@@ -45,36 +45,20 @@ class Welcome extends Artdev_Controller {
 
 	public function index()
 	{
-		// cek($this->get_login('role_id'));
-		// //data anggota bisnis
-		// $data_pendaftar_bisnis = [];
-		// $get_pendaftar_bisnis = $this->M_dashboard->c_pendaftar_bisnis();
-		// for ($i=0; $i < count($get_pendaftar_bisnis); $i++) { 
-		// 	$data_pendaftar_bisnis[$get_pendaftar_bisnis[$i]['bulan']] = $get_pendaftar_bisnis[$i]['total'];
-		// }
-		// //data pembelian berhasil
-		// $data_pembelian_berhasil = [];
-		// $get_pembelian_berhasil = $this->M_dashboard->c_pembelian_berhasil();
-		// for ($i=0; $i < count($get_pembelian_berhasil); $i++) { 
-		// 	$data_pembelian_berhasil[$get_pembelian_berhasil[$i]['bulan']] = $get_pembelian_berhasil[$i]['total'];
-		// }
-		// $bulan = array(
-		// 	'1' => 'jan',
-		// 	'2' => 'feb',
-		// 	'3' => 'mar',
-		// 	'4' => 'apr',
-		// 	'5' => 'mei',
-		// 	'6' => 'jun',
-		// 	'7' => 'jul',
-		// 	'8' => 'agu',
-		// 	'9' => 'sep',
-		// 	'10' => 'okt',
-		// 	'11' => 'nov',
-		// 	'12' => 'des',
-		// );
+
+		$perbarang = $this->M_dashboard->total_perbarang();
+
+		if (!empty($perbarang)) {
+			$no = 1;
+		}else{
+			$no = 0;
+		}
 
 		$data = [
-			// 'ttl_user' 				=> $this->M_dashboard->total_user(),
+			'ttl_transaksi'			=> $this->M_dashboard->total_transaksi(),
+			'ttl_pemasukan'			=> $this->M_dashboard->total_pemasukan(),
+			'peritem'				=> $perbarang,
+			'no'					=> $no
 		];
 
 		//parsing (template_content, variabel_parsing)
