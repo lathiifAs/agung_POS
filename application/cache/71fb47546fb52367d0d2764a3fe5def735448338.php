@@ -47,7 +47,7 @@
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <label>Kode Barang<span style="color:red">*</span> </label>
+                                    <label>Kode Barang </label>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">

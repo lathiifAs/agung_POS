@@ -150,7 +150,7 @@ class Barang extends Artdev_Controller {
 		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini untuk C  atau create Data) *wajib
 		$this->_set_page_rule("C");
         // cek input
-        $this->form_validation->set_rules('barang_kd', '', 'trim|required');
+        // $this->form_validation->set_rules('barang_kd', '', 'trim|required');
         $this->form_validation->set_rules('barang_nm', '', 'required|max_length[50]');
 		$this->form_validation->set_rules('stok', '', 'trim|required');
 		$this->form_validation->set_rules('satuan', '', 'trim|required');
@@ -228,7 +228,7 @@ class Barang extends Artdev_Controller {
 		// set page rules (untuk memberitahukan pada sistem bahwa halaman ini U untuk Update data) *wajib
 		$this->_set_page_rule("U");
         // cek input
-        $this->form_validation->set_rules('barang_kd', '', 'trim|required');
+        // $this->form_validation->set_rules('barang_kd', '', 'trim|required');
         $this->form_validation->set_rules('barang_nm', '', 'required|max_length[50]');
 		$this->form_validation->set_rules('satuan', '', 'trim|required');
 		$this->form_validation->set_rules('harga', '', 'trim|required');

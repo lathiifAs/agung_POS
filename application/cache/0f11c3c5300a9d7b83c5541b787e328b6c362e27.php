@@ -195,16 +195,15 @@
               'jumlah'    : jumlah
           },
           success: function (result) {
-            if (result == 0) {
-              alert('jumlah stok tidak mencukupi.');
-            }
-            else if(result == 1){
+            if(result == "berhasil"){
               //berhasil
               get_list();
-            }else if(result == 2){
+            }else if(result == "gagal"){
               alert('gagal menambahkan ke list.');
-            }else{
+            }else if(result == "lengkapi"){
               alert('Barang dan jumlah harus dimasukan.');
+            }else{
+              alert('jumlah stok tidak mencukupi. sisa stok = ' + result);
             }
           }
       });
@@ -260,6 +259,8 @@
               total += parseInt(item.subtotal);
                 // alert(item.PageName);
             });
+
+            console.log(total);
             
             $("#tbllist tbody").html(html);
             document.getElementById("total").innerHTML = 'Rp. ' + Number(total).toLocaleString('ES-es');

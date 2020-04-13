@@ -95,8 +95,8 @@ class Kasir extends Artdev_Controller {
 			$harga = $get_stok['harga'];
 
 			if ($get_stok['stok'] < $jumlah) {
-				// default error
-				echo 0;exit;
+				// ambil stok
+				echo $get_stok['stok'];exit;
 			}
 
 			$params = array(
@@ -119,14 +119,14 @@ class Kasir extends Artdev_Controller {
 				// update
 				$this->M_barang->update('barang', $params_update, $where_update);
 				// //sukses notif
-				echo 1;exit;
+				echo "berhasil";exit;
             } else {
 				// default error
-				echo 2;exit;
+				echo "gagal";exit;
             }
         } else {
 			// default error
-			echo 3;exit;
+			echo "lengkapi";exit;
         }
 	}
 

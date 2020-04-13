@@ -1,0 +1,4 @@
+username :
+superuser = superuser/@Kasir2020
+admin = admin/@Adminkasir2020
+kasir = kasir/@kasirdemo2020

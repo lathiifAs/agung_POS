@@ -66,6 +66,7 @@ class M_barang extends Artdev_Model {
     {
         $this->db->select('*');
         $this->db->from('barang'); 
+        $this->db->where('active_st', 'yes'); 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
           $result = $query->result_array();
